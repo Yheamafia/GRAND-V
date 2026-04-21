@@ -2,115 +2,167 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تحميل البرنامج</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YHEA GAMING | تحميل الآمن</title>
   <style>
+    :root {
+      --primary-red: #ff416c;
+      --primary-blue: #00d2ff;
+      --success-green: #00ff87;
+      --bg-dark: #0f172a;
+    }
+
     body {
-      background: linear-gradient(135deg, #0f172a, #020617);
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: #fff;
-      font-family: Tahoma, Arial;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
     }
+
     .box {
-      background: rgba(2, 6, 23, 0.95);
-      padding: 35px 25px;
-      border-radius: 16px;
-      width: 340px;
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 24px;
+      width: 360px;
       text-align: center;
-      box-shadow: 0 0 30px rgba(0,0,0,.7);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
     }
-    h2 {
-      margin-bottom: 10px;
-      font-size: 22px;
-    }
-    p {
-      font-size: 14px;
-      color: #cbd5f5;
-      margin-bottom: 20px;
-    }
-    button {
+
+    .channel-img {
       width: 100%;
-      padding: 13px;
+      height: 120px;
+      background: #1e293b url('https://via.placeholder.com/400x150/1e293b/ffffff?text=YHEA+GAMING') center/cover;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      border: 2px solid rgba(255,255,255,0.05);
+    }
+
+    h2 { margin: 0 0 10px 0; font-size: 22px; color: #fff; }
+    p { font-size: 14px; color: #94a3b8; margin-bottom: 20px; }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
       margin: 8px 0;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       font-size: 15px;
-      transition: 0.15s;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: 0.3s;
+      text-decoration: none;
+      color: white;
+      position: relative;
     }
-    button:hover { transform: scale(1.02); opacity: 0.9; }
-    .sub { background: #dc2626; color: #fff; }
-    .like { background: #2563eb; color: #fff; }
-    .unlock { background: #16a34a; color: #fff; }
-    .download { background: #facc15; color: #000; font-weight: bold; }
+
+    .btn:disabled {
+      background: #334155 !important;
+      cursor: not-allowed;
+      opacity: 0.6;
+      box-shadow: none !important;
+    }
+
+    .sub { background: linear-gradient(45deg, #ff416c, #ff4b2b); box-shadow: 0 4px 15px rgba(255, 75, 43, 0.3); }
+    .like { background: linear-gradient(45deg, #00d2ff, #3a7bd5); box-shadow: 0 4px 15px rgba(58, 123, 213, 0.3); }
+    .unlock { background: #475569; }
+    .unlock.ready { background: #16a34a; box-shadow: 0 4px 15px rgba(22, 163, 74, 0.4); }
+
+    .download { 
+      background: linear-gradient(45deg, #facc15, #eab308); 
+      color: #000; 
+      margin-top: 20px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+
+    .status-icon { font-size: 18px; }
     .hidden { display: none; }
-    .timer { margin-top: 12px; font-size: 14px; color: #94a3b8; }
-    .footer { margin-top: 18px; font-size: 12px; color: #64748b; }
+    .footer { margin-top: 25px; font-size: 11px; color: #64748b; }
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h2>🔒 تحميل البرنامج</h2>
-  <p>ادعمنا بالاشتراك واللايك لفتح رابط التحميل</p>
+  <div class="channel-img"></div>
+  <h2>🔒 نظام التحقق الآمن</h2>
+  <p>أكمل الخطوات لفتح رابط التحميل</p>
 
-  <a href="https://www.youtube.com/@YHEAEBARON?sub_confirmation=1" target="_blank">
-    <button class="sub">📺 اشترك في القناة</button>
+  <a href="https://www.youtube.com/@YHEAEBARON?sub_confirmation=1" target="_blank" id="subBtn" class="btn sub" onclick="startTimer('sub')">
+    <span class="status-icon" id="subIcon">📺</span>
+    <span id="subText">1. اشترك في القناة</span>
   </a>
 
-  <a href="https://www.youtube.com/watch?v=Uhsg5RmdK6c" target="_blank">
-    <button class="like">👍 اعمل لايك للفيديو</button>
+  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA" target="_blank" id="likeBtn" class="btn like" style="display:none;" onclick="startTimer('like')">
+    <span class="status-icon" id="likeIcon">👍</span>
+    <span id="likeText">2. اعمل لايك للفيديو</span>
   </a>
 
-  <button class="unlock" onclick="startTimer()">✔ تم، متابعة</button>
+  <button id="unlockBtn" class="btn unlock" disabled onclick="finalCheck()">
+    <span id="unlockText">انتظر إكمال الخطوات...</span>
+  </button>
 
-  <div id="timer" class="timer"></div>
-
-  <a id="download" href="https://sendgb.com/8R1BifDmGlS" class="hidden" target="_blank">
-    <button class="download">⬇ تحميل البرنامج الآن</button>
+  <a id="downloadArea" href="https://sendgb.com/8R1BifDmGlS" class="hidden" target="_blank">
+    <button class="btn download">⬇ تحميل الملف الآن</button>
   </a>
 
-  <div class="footer">© YHEAEBARON</div>
+  <div class="footer">POWERED BY YHEA GAMING © 2026</div>
 </div>
 
 <script>
-  let step = 0;
-  let locked = false;
+  let subDone = false;
+  let likeDone = false;
 
-  function startTimer() {
-    if (locked) return;
-    locked = true;
-    runStep();
-  }
-
-  function runStep() {
-    const timer = document.getElementById('timer');
-    const download = document.getElementById('download');
-
+  function startTimer(type) {
     let seconds = 10;
+    const btn = type === 'sub' ? document.getElementById('subBtn') : document.getElementById('likeBtn');
+    const text = type === 'sub' ? document.getElementById('subText') : document.getElementById('likeText');
+    const icon = type === 'sub' ? document.getElementById('subIcon') : document.getElementById('likeIcon');
+
+    // منع الضغط المتكرر أثناء العد
+    btn.style.pointerEvents = "none";
 
     const interval = setInterval(() => {
-      timer.innerText = `⏳ انتظر ${seconds} ثواني...`;
+      text.innerText = `انتظر ${seconds}ث للتحقق...`;
       seconds--;
 
       if (seconds < 0) {
         clearInterval(interval);
-        step++;
-
-        if (step === 1) {
-          timer.innerText = '✔ تم التحقق، كمل الخطوة الثانية';
-          setTimeout(() => locked = false, 500);
-        }
-
-        if (step === 2) {
-          timer.innerText = '✔ تم فتح رابط التحميل';
-          download.classList.remove('hidden');
+        text.innerText = type === 'sub' ? "تم الاشتراك بنجاح" : "تم وضع اللايك بنجاح";
+        icon.innerText = "✅";
+        btn.style.opacity = "0.7";
+        
+        if (type === 'sub') {
+          subDone = true;
+          document.getElementById('likeBtn').style.display = "flex"; // إظهار زر اللايك
+        } else {
+          likeDone = true;
+          enableUnlock();
         }
       }
     }, 1000);
+  }
+
+  function enableUnlock() {
+    const unlockBtn = document.getElementById('unlockBtn');
+    unlockBtn.disabled = false;
+    unlockBtn.classList.add('ready');
+    document.getElementById('unlockText').innerText = "فتح رابط التحميل الآن";
+  }
+
+  function finalCheck() {
+    document.getElementById('unlockBtn').style.display = "none";
+    document.getElementById('downloadArea').classList.remove('hidden');
   }
 </script>
 
