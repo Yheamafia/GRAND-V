@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YHEA GAMING | مركز التحميل</title>
+
   <style>
     body {
-      /* خلفية صورة جيمينج احترافية */
       background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
@@ -79,12 +79,17 @@
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    @keyframes pulse { 
+      0% { transform: scale(1); } 
+      50% { transform: scale(1.05); } 
+      100% { transform: scale(1); } 
+    }
 
     .hidden { display: none; }
     .footer { margin-top: 25px; font-size: 11px; color: #94a3b8; }
   </style>
 </head>
+
 <body>
 
 <div class="box">
@@ -92,18 +97,27 @@
   <h2>🔒 نظام التحقق</h2>
   <p>يرجى إكمال المهام لفتح الرابط</p>
 
+  <!-- 1 اشتراك -->
   <a href="https://www.youtube.com/@YHEAEBARON?sub_confirmation=1" target="_blank" id="subBtn" class="btn sub" onclick="startTimer('sub')">
     <span id="subText">📺 1. اشترك في القناة</span>
   </a>
 
+  <!-- 2 لايك -->
   <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA" target="_blank" id="likeBtn" class="btn like" style="display:none;" onclick="startTimer('like')">
     <span id="likeText">👍 2. اعمل لايك للفيديو</span>
   </a>
 
+  <!-- 3 تعليق -->
+  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA" target="_blank" id="commentBtn" class="btn like" style="display:none;" onclick="startTimer('comment')">
+    <span id="commentText">💬 3. اكتب تعليق جميل</span>
+  </a>
+
+  <!-- فتح -->
   <button id="unlockBtn" class="btn unlock" disabled onclick="finalCheck()">
     <span id="unlockText">بانتظار التحقق...</span>
   </button>
 
+  <!-- تحميل -->
   <a id="downloadArea" href="https://sendgb.com/8R1BifDmGlS" class="hidden" target="_blank">
     <button class="btn download">⬇ تحميل الملف الآن</button>
   </a>
@@ -114,34 +128,51 @@
 <script>
   let subDone = false;
   let likeDone = false;
+  let commentDone = false;
+
+  const TASK_TIME = 25000; // 25 ثانية
 
   function startTimer(type) {
-    const btn = type === 'sub' ? document.getElementById('subBtn') : document.getElementById('likeBtn');
-    const text = type === 'sub' ? document.getElementById('subText') : document.getElementById('likeText');
-    
+    let btn, text;
+
+    if (type === 'sub') {
+      btn = document.getElementById('subBtn');
+      text = document.getElementById('subText');
+    } else if (type === 'like') {
+      btn = document.getElementById('likeBtn');
+      text = document.getElementById('likeText');
+    } else {
+      btn = document.getElementById('commentBtn');
+      text = document.getElementById('commentText');
+    }
+
     btn.style.pointerEvents = "none";
-    text.innerText = "⏳ قيد التحقيق...";
+    text.innerText = "⏳ قيد التحقق...";
 
     setTimeout(() => {
+      text.innerText = "✅ تمت المهمة بنجاح";
+      btn.style.opacity = "0.6";
+
       if (type === 'sub') {
-        text.innerText = "✅ تمت المهمة بنجاح";
-        btn.style.opacity = "0.6";
         subDone = true;
         document.getElementById('likeBtn').style.display = "flex";
-      } else {
-        text.innerText = "✅ تمت المهمة بنجاح";
-        btn.style.opacity = "0.6";
+      } else if (type === 'like') {
         likeDone = true;
+        document.getElementById('commentBtn').style.display = "flex";
+      } else {
+        commentDone = true;
         enableUnlock();
       }
-    }, 20000); // 20 ثانية لكل خطوة
+    }, TASK_TIME);
   }
 
   function enableUnlock() {
-    const unlockBtn = document.getElementById('unlockBtn');
-    unlockBtn.disabled = false;
-    unlockBtn.classList.add('ready');
-    document.getElementById('unlockText').innerText = "فتح الرابط الآن";
+    if (subDone && likeDone && commentDone) {
+      const unlockBtn = document.getElementById('unlockBtn');
+      unlockBtn.disabled = false;
+      unlockBtn.classList.add('ready');
+      document.getElementById('unlockText').innerText = "فتح الرابط الآن";
+    }
   }
 
   function finalCheck() {
