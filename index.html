@@ -32,22 +32,57 @@
       backdrop-filter: blur(15px);
       padding: 30px;
       border-radius: 24px;
-      width: 360px;
+      width: 380px;
       text-align: center;
       box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
       border: 1px solid rgba(255,255,255,0.1);
+      overflow: hidden;
     }
 
-    .channel-img {
-      width: 100%;
-      height: 120px;
-      background: rgba(255,255,255,0.05) url('https://via.placeholder.com/400x150/1e293b/ffffff?text=YHEA+GAMING') center/cover;
-      border-radius: 15px;
-      margin-bottom: 20px;
+    .channel-header {
+      width: calc(100% + 60px);
+      height: 160px;
+      margin: -30px -30px 20px -30px;
+      border-bottom: 2px solid #00d2ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=2071') no-repeat center center;
+      background-size: cover;
     }
 
-    h2 { margin: 0 0 10px 0; font-size: 22px; color: #00d2ff; }
-    p { font-size: 14px; color: #cbd5e1; margin-bottom: 25px; }
+    .channel-header::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 0;
+    }
+
+    .channel-header p {
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+      line-height: 1.6;
+      z-index: 1;
+      text-shadow: 0 2px 15px rgba(0, 210, 255, 0.8);
+    }
+
+    h2 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      color: #00d2ff;
+    }
+
+    .info-text {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-bottom: 25px;
+    }
 
     .btn {
       width: 100%;
@@ -70,67 +105,82 @@
     .sub { background: linear-gradient(45deg, #ff416c, #ff4b2b); }
     .like { background: linear-gradient(45deg, #00d2ff, #3a7bd5); }
     .unlock { background: #334155; }
-    .unlock.ready { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
 
-    .download { 
-      background: #facc15; 
-      color: #000; 
-      margin-top: 20px;
-      animation: pulse 2s infinite;
+    .unlock.ready {
+      background: #10b981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+      cursor: pointer;
     }
 
-    @keyframes pulse { 
-      0% { transform: scale(1); } 
-      50% { transform: scale(1.05); } 
-      100% { transform: scale(1); } 
+    .download {
+      background: #facc15;
+      color: #000;
+      margin-top: 20px;
+      animation: pulse 2s infinite;
+      text-decoration: none;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
     .hidden { display: none; }
-    .footer { margin-top: 25px; font-size: 11px; color: #94a3b8; }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
   </style>
 </head>
-
 <body>
 
 <div class="box">
-  <div class="channel-img"></div>
-  <h2>🔒 نظام التحقق</h2>
-  <p>يرجى إكمال المهام لفتح الرابط</p>
+  <div class="channel-header">
+    <p>الرجاء إكمال جميع الشروط لفتح موقع تنزيل رابط التحميل</p>
+  </div>
 
-  <!-- 1 اشتراك -->
-  <a href="https://www.youtube.com/@YHEAEBARON?sub_confirmation=1" target="_blank" id="subBtn" class="btn sub" onclick="startTimer('sub')">
+  <h2>🔒 نظام التحقق</h2>
+  <p class="info-text">يرجى إكمال المهام لفتح الرابط</p>
+
+  <a href="https://www.youtube.com/@YHEAEBARON?sub_confirmation=1"
+     target="_blank" id="subBtn" class="btn sub" onclick="startTimer('sub')">
     <span id="subText">📺 1. اشترك في القناة</span>
   </a>
 
-  <!-- 2 لايك -->
-  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA" target="_blank" id="likeBtn" class="btn like" style="display:none;" onclick="startTimer('like')">
+  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA"
+     target="_blank" id="likeBtn" class="btn like" style="display:none;" onclick="startTimer('like')">
     <span id="likeText">👍 2. اعمل لايك للفيديو</span>
   </a>
 
-  <!-- 3 تعليق -->
-  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA" target="_blank" id="commentBtn" class="btn like" style="display:none;" onclick="startTimer('comment')">
+  <a href="https://www.youtube.com/watch?v=qcs2Rnf6_EA"
+     target="_blank" id="commentBtn" class="btn like" style="display:none;" onclick="startTimer('comment')">
     <span id="commentText">💬 3. اكتب تعليق جميل</span>
   </a>
 
-  <!-- فتح -->
   <button id="unlockBtn" class="btn unlock" disabled onclick="finalCheck()">
     <span id="unlockText">بانتظار التحقق...</span>
   </button>
 
-  <!-- تحميل -->
-  <a id="downloadArea" href="https://sendgb.com/8R1BifDmGlS" class="hidden" target="_blank">
-    <button class="btn download">⬇ تحميل الملف الآن</button>
-  </a>
+  <div id="downloadArea" class="hidden">
+    <a href="https://sendgb.com/8R1BifDmGlS"
+       class="btn download" target="_blank">
+      ⬇ تحميل الملف الآن
+    </a>
+  </div>
 
-  <div class="footer">POWERED BY YHEA GAMING © 2026</div>
+  <div class="footer">
+    POWERED BY YHEA GAMING © 2026
+  </div>
 </div>
 
 <script>
   let subDone = false;
   let likeDone = false;
   let commentDone = false;
-
-  const TASK_TIME = 25000; // 25 ثانية
+  const TASK_TIME = 18000; // تم ضبطها لـ 18 ثانية
 
   function startTimer(type) {
     let btn, text;
@@ -163,6 +213,7 @@
         commentDone = true;
         enableUnlock();
       }
+
     }, TASK_TIME);
   }
 
